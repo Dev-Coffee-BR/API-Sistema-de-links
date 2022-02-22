@@ -165,6 +165,10 @@ REST_FRAMEWORK = {  # Classes de autenticação do rest framework
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "static"
+
+MEDIA_ROOT = BASE_DIR /"data"
+MEDIA_URL = "/data/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
