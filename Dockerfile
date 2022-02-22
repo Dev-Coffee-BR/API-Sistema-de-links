@@ -25,4 +25,3 @@ RUN chown -R api:api ./
 USER api
 
 EXPOSE 8080
-CMD env/bin/gunicorn --bind 0.0.0.0:8080 --access-logfile - --error-logfile - api.wsgi
