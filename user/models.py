@@ -1,24 +1,14 @@
 from django.db import models
-from django.utils import timezone
-from django.db.models import Sum
 from django.contrib.auth.models import (
     AbstractBaseUser,
     PermissionsMixin,
     BaseUserManager,
-)  # Importando libs bases para criação de user
-from django.utils.translation import (
-    activate,
-    gettext as _,
-)  # Importando tradutor de texto
+)
+from django.utils.translation import gettext as _  # Importando tradutor de texto
 from django.contrib import auth  # Importando modulo auth
 from django.core.mail import send_mail  # Importando função de envio de email
-from api.settings import (
-    SECRET_KEY,
-    ADMIN_FROM_EMAIL,
-)  # Importando email de submissão da api
-import jwt
+from api.settings import ADMIN_FROM_EMAIL
 import random
-from datetime import datetime, timedelta
 
 
 class UserManager(BaseUserManager):
