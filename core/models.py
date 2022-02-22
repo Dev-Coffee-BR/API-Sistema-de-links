@@ -10,8 +10,8 @@ class Category(models.Model):
 
 class Link(models.Model):
     url = models.URLField(_("url"))
-    name = models.CharField(_("name"), max_length=50)
-    description = models.TextField(_("description"), max_length=200)
+    name = models.CharField(_("name"), max_length=50, blank=True)
+    description = models.TextField(_("description"), max_length=200, blank=True)
     creator = models.ForeignKey(
         User,
         verbose_name=_("created by"),
@@ -36,8 +36,8 @@ class FileType(models.Model):
 
 
 class File(models.Model):
-    name = models.CharField(_("name"), max_length=50)
-    description = models.TextField(_("description"), max_length=200)
+    name = models.CharField(_("name"), max_length=50, blank=True)
+    description = models.TextField(_("description"), max_length=200, blank=True)
     file = models.FileField(_("file"), upload_to="files/")
     creator = models.ForeignKey(
         User,

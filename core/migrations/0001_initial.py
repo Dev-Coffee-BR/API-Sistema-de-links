@@ -15,63 +15,218 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50, verbose_name='nome')),
-                ('created_in', models.DateTimeField(auto_now_add=True, verbose_name='created in')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50, verbose_name="nome")),
+                (
+                    "created_in",
+                    models.DateTimeField(auto_now_add=True, verbose_name="created in"),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='FileType',
+            name="FileType",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50, verbose_name='nome')),
-                ('created_in', models.DateTimeField(auto_now_add=True, verbose_name='created in')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50, verbose_name="nome")),
+                (
+                    "created_in",
+                    models.DateTimeField(auto_now_add=True, verbose_name="created in"),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Link',
+            name="Link",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('url', models.URLField(verbose_name='url')),
-                ('name', models.CharField(max_length=50, verbose_name='nome')),
-                ('description', models.TextField(max_length=200, verbose_name='description')),
-                ('created_in', models.DateTimeField(auto_now_add=True, verbose_name='created in')),
-                ('expiration_date', models.DateTimeField(blank=True, null=True, verbose_name='expiration date')),
-                ('soft_delet', models.DateTimeField(blank=True, help_text='exclusion data the link if he has been excluded', null=True, verbose_name='deleted')),
-                ('creator', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='links', to=settings.AUTH_USER_MODEL, verbose_name='created by')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("url", models.URLField(verbose_name="url")),
+                ("name", models.CharField(max_length=50, verbose_name="nome")),
+                (
+                    "description",
+                    models.TextField(max_length=200, verbose_name="description"),
+                ),
+                (
+                    "created_in",
+                    models.DateTimeField(auto_now_add=True, verbose_name="created in"),
+                ),
+                (
+                    "expiration_date",
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name="expiration date"
+                    ),
+                ),
+                (
+                    "soft_delet",
+                    models.DateTimeField(
+                        blank=True,
+                        help_text="exclusion data the link if he has been excluded",
+                        null=True,
+                        verbose_name="deleted",
+                    ),
+                ),
+                (
+                    "creator",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        related_name="links",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="created by",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='File',
+            name="File",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50, verbose_name='nome')),
-                ('description', models.TextField(max_length=200, verbose_name='description')),
-                ('file', models.FileField(upload_to='files/', verbose_name='file')),
-                ('created_in', models.DateTimeField(auto_now_add=True, verbose_name='created in')),
-                ('soft_delet', models.DateTimeField(blank=True, help_text='exclusion data the file if he has been excluded', null=True, verbose_name='deleted')),
-                ('creator', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='files', to=settings.AUTH_USER_MODEL, verbose_name='created by')),
-                ('file_type', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='files', to='core.filetype', verbose_name='file type')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50, verbose_name="nome")),
+                (
+                    "description",
+                    models.TextField(max_length=200, verbose_name="description"),
+                ),
+                ("file", models.FileField(upload_to="files/", verbose_name="file")),
+                (
+                    "created_in",
+                    models.DateTimeField(auto_now_add=True, verbose_name="created in"),
+                ),
+                (
+                    "soft_delet",
+                    models.DateTimeField(
+                        blank=True,
+                        help_text="exclusion data the file if he has been excluded",
+                        null=True,
+                        verbose_name="deleted",
+                    ),
+                ),
+                (
+                    "creator",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        related_name="files",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="created by",
+                    ),
+                ),
+                (
+                    "file_type",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        related_name="files",
+                        to="core.filetype",
+                        verbose_name="file type",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='CategoryLink',
+            name="CategoryLink",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_in', models.DateTimeField(auto_now_add=True, verbose_name='created in')),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='links', to='core.category', verbose_name='category')),
-                ('link', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='categories', to='core.link', verbose_name='link')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created_in",
+                    models.DateTimeField(auto_now_add=True, verbose_name="created in"),
+                ),
+                (
+                    "category",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="links",
+                        to="core.category",
+                        verbose_name="category",
+                    ),
+                ),
+                (
+                    "link",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="categories",
+                        to="core.link",
+                        verbose_name="link",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='CategoryFile',
+            name="CategoryFile",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_in', models.DateTimeField(auto_now_add=True, verbose_name='created in')),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='files', to='core.category', verbose_name='category')),
-                ('file', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='categories', to='core.file', verbose_name='file')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created_in",
+                    models.DateTimeField(auto_now_add=True, verbose_name="created in"),
+                ),
+                (
+                    "category",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="files",
+                        to="core.category",
+                        verbose_name="category",
+                    ),
+                ),
+                (
+                    "file",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="categories",
+                        to="core.file",
+                        verbose_name="file",
+                    ),
+                ),
             ],
         ),
     ]
