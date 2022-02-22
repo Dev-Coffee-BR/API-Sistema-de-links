@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist",
     "corsheaders",
     "user",
+    "core",
 ]
 
 AUTH_USER_MODEL = "user.User"
@@ -167,7 +168,7 @@ REST_FRAMEWORK = {  # Classes de autenticação do rest framework
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "static"
 
-MEDIA_ROOT = BASE_DIR /"data"
+MEDIA_ROOT = BASE_DIR / "data"
 MEDIA_URL = "/data/"
 
 # Default primary key field type
