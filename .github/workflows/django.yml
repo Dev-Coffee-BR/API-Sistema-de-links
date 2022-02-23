@@ -2,21 +2,21 @@ name: Django CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main , development ]
   pull_request:
-    branches: [ main ]
+    branches: [ main , development ]
+
+env:
+  ENV: development
 
 jobs:
   build:
-
-    enviroment:
-    - ENV=development
 
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.10]
+        python-version: [ 3.9 ]
 
     steps:
     - uses: actions/checkout@v2

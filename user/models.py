@@ -6,7 +6,8 @@ from django.contrib.auth.models import (
 )
 from django.utils.translation import gettext as _  # Importando tradutor de texto
 from django.contrib import auth  # Importando modulo auth
-from django.core.mail import send_mail  # Importando função de envio de email
+from django.core.mail import send_mail
+from django.utils import timezone  # Importando função de envio de email
 from api.settings import ADMIN_FROM_EMAIL
 import random
 
@@ -143,6 +144,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     def email_user(self, subject, message, from_email=ADMIN_FROM_EMAIL, **kwargs):
         """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+    def soft_delete(self):
+        self.soft_delet = timezone.now()
+        self.is_active = False
+        self.save()
 
     @staticmethod
     def generate_random_code() -> str:
