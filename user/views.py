@@ -4,8 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.utils import timezone
 from api.settings import EMAIL_HOST_USER
-from rest_framework.authentication import TokenAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import User
 from .serializer import UserSerializer
 from .permissions import IsNotDeletedUser, ReadOnly
@@ -15,8 +15,8 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().filter(soft_delet=None)
     serializer_class = UserSerializer
 
-    permission_classes = [IsNotDeletedUser]
-    authentication_classes = [JWTAuthentication, TokenAuthentication]
+    permission_classes = [ReadOnly]
+    authentication_classes = [JWTAuthentication]
 
 
 class CountUsers(APIView):
@@ -25,7 +25,7 @@ class CountUsers(APIView):
     def get(self, request):
         qtd_users = User.objects.all().count()
 
-        return Response({"sucess": True, "num_users": qtd_users}, 200)
+        return Response({"success": True, "num_users": qtd_users}, 200)
 
 
 class Register(APIView):
@@ -33,7 +33,7 @@ class Register(APIView):
         for field in ["email", "password"]:
             if not field in request.data:
                 return Response(
-                    {"sucess": False, "error": f"Campo {field} necessario"}, 406
+                    {"success": False, "error": f"Campo {field} necessario"}, 406
                 )
 
         u = User()
@@ -42,7 +42,7 @@ class Register(APIView):
             if not User.objects.filter(email=request.data["email"]).first().soft_delet:
                 return Response(
                     {
-                        "sucess": False,
+                        "success": False,
                         "error": f"Usuario com esse email já existente",
                     },
                     409,
@@ -64,7 +64,7 @@ class Register(APIView):
         u.set_password(request.data["password"])
         u.save()
 
-        return Response({"sucess": True, "message": "Usuario criado com sucesso"}, 201)
+        return Response({"success": True, "message": "Usuario criado com sucesso"}, 201)
 
 
 class PutUser(APIView):
@@ -83,7 +83,7 @@ class PutUser(APIView):
         user.save()
 
         return Response(
-            {"sucess": True, "message": "Usuario atualizado com sucesso"}, 200
+            {"success": True, "message": "Usuario atualizado com sucesso"}, 200
         )
 
     permission_classes = [IsNotDeletedUser]
@@ -93,19 +93,19 @@ class PutUser(APIView):
 class ChangePassword(APIView):
     def post(self, request):
         if not "password" in request.data:
-            return Response({"sucess": False, "error": "Senha necessária"}, 406)
+            return Response({"success": False, "error": "Senha necessária"}, 406)
         if not "new_password" in request.data:
-            return Response({"sucess": False, "error": "Senha necessária"}, 406)
+            return Response({"success": False, "error": "Senha necessária"}, 406)
 
         user = request.user
         if user.check_password(request.data["password"]):
             user.set_password(request.data["new_password"])
             user.save()
             return Response(
-                {"sucess": True, "message": "Senha alterada com sucesso"}, 200
+                {"success": True, "message": "Senha alterada com sucesso"}, 200
             )
         else:
-            return Response({"sucess": False, "error": "Senha incorreta"}, 401)
+            return Response({"success": False, "error": "Senha incorreta"}, 401)
 
     permission_classes = [IsNotDeletedUser]
     authentication_classes = [JWTAuthentication]
@@ -114,12 +114,9 @@ class ChangePassword(APIView):
 class DeleteUser(APIView):
     def delete(self, request):
         user = request.user
-        user.is_active = False
-        user.is_trusty = None
-        user.soft_delet = timezone.now()
-        user.save()
+        user.soft_delete()
         return Response(
-            {"sucess": True, "message": "Usuario deletado com sucesso"}, 200
+            {"success": True, "message": "Usuario deletado com sucesso"}, 200
         )
 
     permission_classes = [IsNotDeletedUser]
