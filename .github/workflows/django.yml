@@ -6,11 +6,11 @@ on:
   pull_request:
     branches: [ main , development ]
 
+env:
+  ENV: development
+
 jobs:
   build:
-
-    enviroment:
-    - ENV=development
 
     runs-on: ubuntu-latest
     strategy:
